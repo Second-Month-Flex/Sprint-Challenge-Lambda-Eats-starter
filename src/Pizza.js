@@ -78,6 +78,53 @@ function Pizza() {
     });
   };
 
+  const url = "https://reqres.in/api/users";
+
+  //   const getPizza = () => {
+  //     axios
+  //       .get(url)
+  //       .then((res) => {
+  //         console.log(res.data.data);
+  //         setPizzaOrder(res.data.data);
+  //       })
+  //       .catch((err) => {
+  //         console.log(err);
+  //       });
+  //   };
+
+  //   useEffect(() => {
+  //     getPizza();
+  //   }, []);
+
+  //   const postPizza = (pizzaOrder) => {
+  //     axios.post(url, pizzaOrder).then((res) => {
+  //       setPizzaOrder([...pizzaOrder, res.data]);
+  //     });
+  //   };
+
+  const [post, setPost] = useState([]);
+
+  const onSubmit = (event) => {
+    event.preventDefault();
+
+    axios.post(url, form).then((res) => {
+      setPost(res.data);
+      setPizzaOrder(res.data);
+    });
+
+    // const newPizza = {
+    //   name: form.name,
+    //   size: form.size,
+    //   instructions: form.instructions,
+    //   red: form.red,
+    //   garlic: form.garlic,
+    //   bbq: form.bbq,
+    //   spinach: form.spinach,
+    // };
+    // postPizza(newPizza);
+    setForm(initialForm);
+  };
+
   return (
     <div>
       <form>
@@ -155,7 +202,29 @@ function Pizza() {
           Spinach Sauce
         </label>
       </form>
-      <button> Submit Pizza Order</button>
+      <label>
+        <button name="submit" onClick={onSubmit}>
+          {" "}
+          Submit Pizza Order
+        </button>
+      </label>
+      <pre>{JSON.stringify(post, null, 2)}</pre>
+      {/* <p>
+        {pizzaOrder.map((item) => {
+          return (
+            <div>
+              <h2>{item.name}</h2>
+              <h3>{item.size} </h3>
+              <h3>{item.instruction} </h3>
+              <h3>{item.size} </h3>
+              <h5>{item.red} </h5>
+              <h5>{item.bbq} </h5>
+              <h5>{item.garlic} </h5>
+              <h5>{item.spinach} </h5>
+            </div>
+          );
+        })}
+      </p> */}
     </div>
   );
 }
